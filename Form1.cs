@@ -82,11 +82,18 @@ namespace Calculator
                 //Change condition after clicked on equal button
                 else if (num1 != 0 && num2 != 0)
                 {
-                    txtResult.Text = "";
-                    txtResult.Text += button.Text;
-                    num1 = 0;
-                    num2 = 0;
-                    hasOperatorClicked = false;
+                    if(preResult == true)
+                    {
+                        txtResult.Text = "";
+                        txtResult.Text += button.Text;
+                        num1 = 0;
+                        num2 = 0;
+                        hasOperatorClicked = false;
+                    }
+                    else
+                    {
+                        txtResult.Text += button.Text;
+                    }
                 }
                 //When we click on only operator btn and clear the number when textbox remain 0
                 else if(num1 == 0 && hasNum2 == false && num2 == 0 && EqualClick == true)
@@ -177,7 +184,7 @@ namespace Calculator
                     Operator = "";
                 }
             }
-            else if(txtResult.Text != "0")
+            else if(txtResult.Text != null)
             {
                 foreach (var button in btn)
                 {
@@ -215,10 +222,8 @@ namespace Calculator
 
         private void btnDot_Click(object sender, EventArgs e)
         {
-            if (txtResult.Text.Contains(".") == false)
-            {
+            if (!txtResult.Text.Contains("."))
                 txtResult.Text += ".";
-            }
         } 
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -237,70 +242,55 @@ namespace Calculator
         {
             if (EqualClick == true)
             {
-                if (hasOperatorClicked == false)
+                if (!hasOperatorClicked)
                 {
                     if (num1 == 0)
-                    {
                         txtResult.Text = txtResult.Text;
-                    }
-                    else if(num1 != 0 && num2 != 0 && hasOperatorClicked == false)
-                    {
+                    else if(num1 != 0 && num2 != 0 && !hasOperatorClicked && preResult)
                         txtResult.Text = txtResult.Text;
-                    }
-                    else if(num1 == 0 && EqualClick == true)
-                    {
+                    else if(num1 != 0 && num2 != 0 && !hasOperatorClicked && !preResult)
                         ClearOne();
-                    }
-                    else if(num1 != 0 && EqualClick == true && hasOperatorClicked == true)
-                    {
-                        txtResult.Text = txtResult.Text;
-                    }
-                    else if(num1 != 0 && hasOperatorClicked == false)
-                    {
+                    else if(num1 == 0 && EqualClick)
                         ClearOne();
-                    }
+                    else if(num1 != 0 && EqualClick && hasOperatorClicked)
+                        txtResult.Text = txtResult.Text;
+                    else if(num1 != 0 && !hasOperatorClicked)
+                        ClearOne();
                 }
                 else 
                 {
+                    if(!hasOperatorClicked)
                     ClearOne();
+                    else
+                    txtResult.Text = txtResult.Text;
                 }
             }
             else
-            {
                 ClearOne();
-            }
         }
 
         void ClearOne()
         {
             txtResult.Text = txtResult.Text.Substring(0, txtResult.Text.Length - 1);
-
             if (txtResult.Text.Length == 0)
-            {
                 txtResult.Text = "0";
-            }
         }
-
         private void btnFraction_Click(object sender, EventArgs e)
         {
             txtResult.Text = Convert.ToString(1/(Convert.ToDouble(txtResult.Text)));
         }
-
         private void btnSquare_Click(object sender, EventArgs e)
         {
             txtResult.Text = Convert.ToString(Convert.ToDouble(txtResult.Text) * Convert.ToDouble(txtResult.Text));
         }
-
         private void btnSqrRoot_Click(object sender, EventArgs e)
         {
             txtResult.Text = Math.Sqrt(Convert.ToDouble(txtResult.Text)).ToString();
         }
-
         private void btnPercentage_Click(object sender, EventArgs e)
         {
             txtResult.Text = Convert.ToString((Convert.ToDouble(txtResult.Text)) / 100);
         }
-
         private void button21_Click(object sender, EventArgs e)
         {
             txtResult.Text = Convert.ToString(Convert.ToDouble(txtResult.Text) * (-1));
