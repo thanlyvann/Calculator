@@ -27,6 +27,7 @@ namespace Calculator
             if (txtResult.Text == "Cannot Divide by Zero")
             {
                 txtResult.Text = "0";
+                EqualClick = false;
             }
 
             //When start calculator
@@ -34,6 +35,7 @@ namespace Calculator
             {
                 txtResult.Text = "";
                 txtResult.Text += button.Text;
+                EnabledButton();
             }
             else
             {
@@ -140,16 +142,6 @@ namespace Calculator
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            Button[] btn = { btnSum, button11, button12, button13, btnSquare, btnSqrRoot, btnFraction, btnPercentage };
-
-            if (txtResult.Text == "Cannot Divide by Zero")
-            {
-                foreach (var button in btn)
-                {
-                    button.Enabled = true;
-                }
-            }
-
             //first press on equal button
             if (preResult == false)
             {
@@ -171,8 +163,31 @@ namespace Calculator
             hasNum2 = false;
         }
 
+        void EnabledButton()
+        {
+            Button[] btn = { btnSum, button11, button12, button13, btnSquare, btnSqrRoot, btnFraction, btnPercentage };
+
+            if (txtResult.Text == "Cannot Divide by Zero")
+            {
+                foreach (var button in btn)
+                {
+                    button.Enabled = false;
+                    num1 = 0;
+                    num2 = 0;
+                    Operator = "";
+                }
+            }
+            else if(txtResult.Text != "0")
+            {
+                foreach (var button in btn)
+                {
+                    button.Enabled = true;
+                }
+            }
+        }
+
         void calculator()
-        {     
+        {
             switch (Operator)
             {
                 case "+":
@@ -188,6 +203,7 @@ namespace Calculator
                     if (num2 == 0)
                     {
                         txtResult.Text = "Cannot Divide by Zero";
+                        EnabledButton();
                     }
                     else
                     {
