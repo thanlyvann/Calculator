@@ -140,6 +140,15 @@ namespace Calculator
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
+            Button[] btn = { btnSum, button11, button12, button13, btnSquare, btnSqrRoot, btnFraction, btnPercentage };
+
+            if (txtResult.Text == "Cannot Divide by Zero")
+            {
+                foreach (var button in btn)
+                {
+                    button.Enabled = true;
+                }
+            }
 
             //first press on equal button
             if (preResult == false)
@@ -147,6 +156,7 @@ namespace Calculator
                 num2 = Convert.ToDouble(txtResult.Text);
                 calculator();
                 EqualClick = true;
+                preResult = true;
             }
             //multiple calculate number and press on operator instead on equal button
             else if (preResult == true)
@@ -162,7 +172,7 @@ namespace Calculator
         }
 
         void calculator()
-        {
+        {     
             switch (Operator)
             {
                 case "+":
