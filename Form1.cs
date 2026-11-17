@@ -31,7 +31,7 @@ namespace Calculator
             }
 
             //When start calculator
-            if (txtResult.Text == "0" && EqualClick == false)
+            if (txtResult.Text == "0" && !EqualClick)
             {
                 txtResult.Text = "";
                 txtResult.Text += button.Text;
@@ -43,7 +43,7 @@ namespace Calculator
                 //the firt stage they will get into is the first one
 
                 //When we click on operator button and enter the first number
-                if (num1 != 0 && hasNum2 == false && num2 == 0)
+                if (num1 != 0 && num2 == 0 && !hasNum2)
                 {
                     txtResult.Text = "";
                     txtResult.Text += button.Text;
@@ -52,25 +52,23 @@ namespace Calculator
                     preResult = false;
                 }
                 //Continue to add another number before we click on operator
-                else if (num1 == 0 && hasNum2 == false && num2 == 0)
+                else if (num1 == 0 && !hasNum2 && num2 == 0)
                 {
                     txtResult.Text += button.Text;
                 }
                 //Clicked on operator btn and wanna add anoter number after the first number
-                else if (num1 != 0 && hasNum2 == true && num2 == 0 && EqualClick == true)
+                else if (num1 != 0 && hasNum2 && num2 == 0 && EqualClick)
                 {
-                    if (txtResult.Text == "0" && EqualClick == true)
+                    if (txtResult.Text == "0" && EqualClick)
                     {
                         txtResult.Text = "";
                         txtResult.Text += button.Text;
                     }
                     else
-                    {
                         txtResult.Text += button.Text;
-                    }
                 }
                 //Condition for multiple click on equal button and want to calculate with another number
-                else if(num1 != 0 && num2 != 0 && preResult == true)
+                else if(num1 != 0 && num2 != 0 && preResult)
                 {
                     num1 = 0;
                     num1 = Convert.ToDouble(txtResult.Text);
@@ -82,7 +80,7 @@ namespace Calculator
                 //Change condition after clicked on equal button
                 else if (num1 != 0 && num2 != 0)
                 {
-                    if(preResult == true)
+                    if(preResult)
                     {
                         txtResult.Text = "";
                         txtResult.Text += button.Text;
@@ -91,12 +89,10 @@ namespace Calculator
                         hasOperatorClicked = false;
                     }
                     else
-                    {
                         txtResult.Text += button.Text;
-                    }
                 }
                 //When we click on only operator btn and clear the number when textbox remain 0
-                else if(num1 == 0 && hasNum2 == false && num2 == 0 && EqualClick == true)
+                else if(num1 == 0 && num2 == 0 && !hasNum2 && EqualClick)
                 {
                     txtResult.Text = "";
                     txtResult.Text += button.Text;
@@ -119,29 +115,24 @@ namespace Calculator
 
             //To hold the number when press on operator button after press on equal button
             if(!hasNum2)
-            {
                 EqualClick = false;
-            }
             else
-            {
                 EqualClick = true;
-            }
 
             //The first operator
-            if (EqualClick == false)
+            if (!EqualClick)
             {
                 num1 = Convert.ToDouble(txtResult.Text);
                 EqualClick = true;
             }
             //Click on another operator and auto calculate the result
-            else if (EqualClick == true)
+            else
             {
                 btnEqual_Click(sender, e);
                 num1 = Convert.ToDouble(txtResult.Text);
                 hasOperatorClicked = true;
                 preResult = true;
             }
-
             Operator = button.Text;
 
             num2 = 0;
@@ -150,7 +141,7 @@ namespace Calculator
         private void btnEqual_Click(object sender, EventArgs e)
         {
             //first press on equal button
-            if (preResult == false)
+            if (!preResult)
             {
                 num2 = Convert.ToDouble(txtResult.Text);
                 calculator();
@@ -158,7 +149,7 @@ namespace Calculator
                 preResult = true;
             }
             //multiple calculate number and press on operator instead on equal button
-            else if (preResult == true)
+            else
             {
                 num1 = Convert.ToDouble(txtResult.Text);
                 calculator();
@@ -166,7 +157,6 @@ namespace Calculator
                 EqualClick = true;
             }
 
-            //EqualClick = true;
             hasNum2 = false;
         }
 
@@ -213,9 +203,7 @@ namespace Calculator
                         EnabledButton();
                     }
                     else
-                    {
                         txtResult.Text = Convert.ToString(num1 / num2);
-                    }
                     break;
             }
         }
@@ -240,7 +228,7 @@ namespace Calculator
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (EqualClick == true)
+            if (EqualClick)
             {
                 if (!hasOperatorClicked)
                 {
