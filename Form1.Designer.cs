@@ -31,7 +31,7 @@
             this.btnClearOne = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnNum1 = new System.Windows.Forms.Button();
-            this.btnSum = new System.Windows.Forms.Button();
+            this.btnCalculate = new System.Windows.Forms.Button();
             this.btnChange = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -47,7 +47,7 @@
             this.button13 = new System.Windows.Forms.Button();
             this.btnEqual = new System.Windows.Forms.Button();
             this.btnDot = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
+            this.btnCE = new System.Windows.Forms.Button();
             this.btnFraction = new System.Windows.Forms.Button();
             this.btnSquare = new System.Windows.Forms.Button();
             this.btnSqrRoot = new System.Windows.Forms.Button();
@@ -98,17 +98,17 @@
             this.btnNum1.UseVisualStyleBackColor = true;
             this.btnNum1.Click += new System.EventHandler(this.btnNum1_Click);
             // 
-            // btnSum
+            // btnCalculate
             // 
-            this.btnSum.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.btnSum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSum.Location = new System.Drawing.Point(301, 470);
-            this.btnSum.Name = "btnSum";
-            this.btnSum.Size = new System.Drawing.Size(91, 56);
-            this.btnSum.TabIndex = 37;
-            this.btnSum.Text = "+";
-            this.btnSum.UseVisualStyleBackColor = true;
-            this.btnSum.Click += new System.EventHandler(this.btnSum_Click);
+            this.btnCalculate.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnCalculate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCalculate.Location = new System.Drawing.Point(301, 470);
+            this.btnCalculate.Name = "btnCalculate";
+            this.btnCalculate.Size = new System.Drawing.Size(91, 56);
+            this.btnCalculate.TabIndex = 37;
+            this.btnCalculate.Text = "+";
+            this.btnCalculate.UseVisualStyleBackColor = true;
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // btnChange
             // 
@@ -252,7 +252,7 @@
             this.button12.TabIndex = 37;
             this.button12.Text = "*";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btnSum_Click);
+            this.button12.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // button13
             // 
@@ -264,7 +264,7 @@
             this.button13.TabIndex = 37;
             this.button13.Text = "/";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.btnSum_Click);
+            this.button13.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // btnEqual
             // 
@@ -292,17 +292,17 @@
             this.btnDot.UseVisualStyleBackColor = true;
             this.btnDot.Click += new System.EventHandler(this.btnDot_Click);
             // 
-            // button14
+            // btnCE
             // 
-            this.button14.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
-            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Location = new System.Drawing.Point(107, 222);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(91, 56);
-            this.button14.TabIndex = 22;
-            this.button14.Text = "CE";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnCE.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
+            this.btnCE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCE.Location = new System.Drawing.Point(107, 222);
+            this.btnCE.Name = "btnCE";
+            this.btnCE.Size = new System.Drawing.Size(91, 56);
+            this.btnCE.TabIndex = 22;
+            this.btnCE.Text = "CE";
+            this.btnCE.UseVisualStyleBackColor = true;
+            this.btnCE.Click += new System.EventHandler(this.btnCE_Click);
             // 
             // btnFraction
             // 
@@ -429,11 +429,11 @@
             this.button11.TabIndex = 37;
             this.button11.Text = "-";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.btnSum_Click);
+            this.button11.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // lblResult
             // 
-            this.lblResult.Font = new System.Drawing.Font("Khmer OS Siemreap", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResult.Font = new System.Drawing.Font("Khmer OS Siemreap", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblResult.Location = new System.Drawing.Point(0, 82);
             this.lblResult.Name = "lblResult";
             this.lblResult.Size = new System.Drawing.Size(402, 90);
@@ -474,8 +474,8 @@
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button11);
-            this.Controls.Add(this.btnSum);
-            this.Controls.Add(this.button14);
+            this.Controls.Add(this.btnCalculate);
+            this.Controls.Add(this.btnCE);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnClearOne);
             this.Font = new System.Drawing.Font("Khmer OS Siemreap", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -491,7 +491,7 @@
         private System.Windows.Forms.Button btnClearOne;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnNum1;
-        private System.Windows.Forms.Button btnSum;
+        private System.Windows.Forms.Button btnCalculate;
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
@@ -507,7 +507,7 @@
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button btnEqual;
         private System.Windows.Forms.Button btnDot;
-        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button btnCE;
         private System.Windows.Forms.Button btnFraction;
         private System.Windows.Forms.Button btnSquare;
         private System.Windows.Forms.Button btnSqrRoot;

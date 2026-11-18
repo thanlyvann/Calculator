@@ -1,6 +1,4 @@
-﻿using Microsoft.SqlServer.Server;
-using System;
-using System.Linq;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -26,17 +24,26 @@ namespace Calculator
         {
             Button button = (Button)sender;
 
-            if (lblResult.Text == "Cannot Divide by Zero")
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") || lblResult.Text == "Undefined")
             {
                 lblResult.Text = "0";
                 EqualClick = false;
+                EnabledButton();
             }
 
             if (lblResult.Text == "0")
             {
-                lblResult.Text = "";
-                lblResult.Text += button.Text;
-                EnabledButton();
+                if(!hasOperatorClicked)
+                {
+                    lblResult.Text = "";
+                    lblResult.Text += button.Text;
+                    //EnabledButton();
+                }
+                else
+                {
+                    lblResult.Text = "";
+                    lblResult.Text += button.Text;
+                }
             }
             else if (lblResult.Text != "0" && (num1 != 0 || num2 == 0))
             {
@@ -55,14 +62,14 @@ namespace Calculator
                 }
                 else if (hasOperatorClicked)
                 {
-                    lblResult.Text = "";
+                     lblResult.Text = "";
                 }
                 lblResult.Text += button.Text;
                 hasOperatorClicked = false;
             }
         }
 
-        private void btnSum_Click(object sender, EventArgs e)
+        private void btnCalculate_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
@@ -85,6 +92,7 @@ namespace Calculator
 
             Operator = button.Text;
             hasOperatorClicked = true;
+            EqualClick = true;
             num2 = 0;
         }
 
@@ -109,10 +117,10 @@ namespace Calculator
         void EnabledButton()
         {
             Button[] btn =
-                { btnSum, button11, button12, button13, btnSquare,
+                { btnCalculate, button11, button12, button13, btnSquare,
                   btnSqrRoot, btnFraction, btnPercentage, btnChange, btnDot };
 
-            if (lblResult.Text == "Cannot Divide by Zero")
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") || lblResult.Text == "Undefined")
             {
                 foreach (var button in btn)
                 {
@@ -152,6 +160,9 @@ namespace Calculator
                     if (num2 == 0)
                     {
                         lblResult.Text = "Cannot Divide by Zero";
+                        if(num1 == 0 && num2 == 0)
+                            lblResult.Text = "Result is Undefined";
+                            EnabledButton();
                         EnabledButton();
                     }
                     else
@@ -162,6 +173,14 @@ namespace Calculator
 
         private void btnDot_Click(object sender, EventArgs e)
         {
+            Button btn = (Button)sender;
+
+            if(hasOperatorClicked)
+            {
+                lblResult.Text = "0.";
+                hasOperatorClicked = false;
+            }
+
             if (!lblResult.Text.Contains("."))
                 lblResult.Text += ".";
         }
@@ -171,10 +190,14 @@ namespace Calculator
             lblResult.Text = "0";
             EnabledButton();
         }
+        private void btnCE_Click(object sender, EventArgs e)
+        {
+            lblResult.Text = "0";
+        }
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (!EqualClick)
+            if (EqualClick)
                 ClearOne();
             else if (hasOperatorClicked)
                 lblResult.Text = lblResult.Text;
@@ -192,19 +215,41 @@ namespace Calculator
         }
         private void btnFraction_Click(object sender, EventArgs e)
         {
-            lblResult.Text = Convert.ToString(1 / (Convert.ToDouble(lblResult.Text)));
+            if(lblResult.Text == "0")
+            {
+                lblResult.Text = "Cannot Divide by Zero";
+                EnabledButton();
+            }
+            else
+                lblResult.Text = Convert.ToString(1 / (Convert.ToDouble(lblResult.Text)));
         }
         private void btnSquare_Click(object sender, EventArgs e)
         {
-            lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
+             lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
         }
         private void btnSqrRoot_Click(object sender, EventArgs e)
         {
-            lblResult.Text = Math.Sqrt(Convert.ToDouble(lblResult.Text)).ToString();
+            double value = Convert.ToDouble(lblResult.Text);
+
+            if (value < 0)
+            {
+                lblResult.Text = "Undefined";
+                EnabledButton();
+            }
+            else
+                lblResult.Text = Math.Sqrt(Convert.ToDouble(lblResult.Text)).ToString();
         }
         private void btnPercentage_Click(object sender, EventArgs e)
         {
-            lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
+            if(EqualClick)
+            {
+                num2 = Convert.ToDouble(lblResult.Text);
+                lblResult.Text = Convert.ToString((num1 * num2) / 100);
+            }
+            else
+            {
+                lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
+            }
         }
         private void button21_Click(object sender, EventArgs e)
         {
