@@ -10,10 +10,9 @@ namespace Calculator
 
         string Operator = "";
 
-        bool hasNum2 = false;
-        bool EqualClick = false;
-        bool hasOperatorClicked = false;
-        bool preResult = false;
+        bool equalClick = false;
+        bool operatorClicked = false;
+        bool previousResult = false;
 
         public Form1()
         {
@@ -24,20 +23,20 @@ namespace Calculator
         {
             Button button = (Button)sender;
 
-            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") || lblResult.Text == "Undefined")
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") 
+                || lblResult.Text == "Undefined")
             {
                 lblResult.Text = "0";
-                EqualClick = false;
+                equalClick = false;
                 EnabledButton();
             }
 
             if (lblResult.Text == "0")
             {
-                if(!hasOperatorClicked)
+                if(!operatorClicked)
                 {
                     lblResult.Text = "";
                     lblResult.Text += button.Text;
-                    //EnabledButton();
                 }
                 else
                 {
@@ -47,25 +46,20 @@ namespace Calculator
             }
             else if (lblResult.Text != "0" && (num1 != 0 || num2 == 0))
             {
-                if (hasNum2)
-                {
-                    lblResult.Text = "";
-                    hasNum2 = true;
-                    preResult = false;
-                }
-                else if (preResult)
+                if (previousResult)
                 {
                     num1 = 0;
                     num1 = Convert.ToDouble(lblResult.Text);
                     lblResult.Text = "";
-                    preResult = false;
+                    previousResult = false;
                 }
-                else if (hasOperatorClicked)
+                else if(operatorClicked)
                 {
                      lblResult.Text = "";
                 }
+
                 lblResult.Text += button.Text;
-                hasOperatorClicked = false;
+                operatorClicked = false;
             }
         }
 
@@ -73,45 +67,41 @@ namespace Calculator
         {
             Button button = (Button)sender;
 
-            if (hasOperatorClicked)
+            if (operatorClicked)
                 Operator = button.Text;
 
-            if (!hasNum2 && preResult)
-                EqualClick = false;
-
-            if (!EqualClick)
+            if (!equalClick)
             {
                 num1 = Convert.ToDouble(lblResult.Text);
-                EqualClick = true;
+                equalClick = true;
             }
             else
             {
                 btnEqual_Click(sender, e);
-                preResult = true;
+                previousResult = true;
             }
 
             Operator = button.Text;
-            hasOperatorClicked = true;
-            EqualClick = true;
+            operatorClicked = true;
+            equalClick = true;
             num2 = 0;
         }
 
         private void btnEqual_Click(object sender, EventArgs e)
         {
-            if (!preResult)
+            if (!previousResult)
             {
                 num2 = Convert.ToDouble(lblResult.Text);
-                preResult = true;
+                previousResult = true;
             }
             else
             {
                 num1 = Convert.ToDouble(lblResult.Text);
-                hasOperatorClicked = true;
+                operatorClicked = true;
             }
 
             calculator();
-            EqualClick = false;
-            hasNum2 = false;
+            equalClick = false;
         }
 
         void EnabledButton()
@@ -120,7 +110,8 @@ namespace Calculator
                 { btnCalculate, button11, button12, button13, btnSquare,
                   btnSqrRoot, btnFraction, btnPercentage, btnChange, btnDot };
 
-            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") || lblResult.Text == "Undefined")
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") 
+                || lblResult.Text == "Undefined")
             {
                 foreach (var button in btn)
                 {
@@ -135,10 +126,9 @@ namespace Calculator
                     num1 = 0;
                     num2 = 0;
                     Operator = "";
-                    hasNum2 = false;
-                    EqualClick = false;
-                    hasOperatorClicked = false;
-                    preResult = false;
+                    equalClick = false;
+                    operatorClicked = false;
+                    previousResult = false;
                 }
             }
         }
@@ -175,10 +165,10 @@ namespace Calculator
         {
             Button btn = (Button)sender;
 
-            if(hasOperatorClicked)
+            if(operatorClicked)
             {
                 lblResult.Text = "0.";
-                hasOperatorClicked = false;
+                operatorClicked = false;
             }
 
             if (!lblResult.Text.Contains("."))
@@ -197,11 +187,11 @@ namespace Calculator
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (EqualClick)
+            if (equalClick)
                 ClearOne();
-            else if (hasOperatorClicked)
+            else if (operatorClicked)
                 lblResult.Text = lblResult.Text;
-            else if (num1 != 0 && num2 != 0 && preResult)
+            else if (num1 != 0 && num2 != 0 && previousResult)
                 lblResult.Text = lblResult.Text;
             else
                 ClearOne();
@@ -241,7 +231,7 @@ namespace Calculator
         }
         private void btnPercentage_Click(object sender, EventArgs e)
         {
-            if(EqualClick)
+            if(equalClick)
             {
                 num2 = Convert.ToDouble(lblResult.Text);
                 lblResult.Text = Convert.ToString((num1 * num2) / 100);
