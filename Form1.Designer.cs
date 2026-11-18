@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtResult = new System.Windows.Forms.TextBox();
             this.btnClearOne = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnNum1 = new System.Windows.Forms.Button();
@@ -60,20 +59,8 @@
             this.lblMemoryStore = new System.Windows.Forms.Label();
             this.lbeMemory = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
+            this.lblResult = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // txtResult
-            // 
-            this.txtResult.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtResult.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.txtResult.Font = new System.Drawing.Font("Khmer OS Siemreap", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResult.Location = new System.Drawing.Point(9, 97);
-            this.txtResult.Multiline = true;
-            this.txtResult.Name = "txtResult";
-            this.txtResult.Size = new System.Drawing.Size(384, 66);
-            this.txtResult.TabIndex = 7;
-            this.txtResult.Text = "0";
-            this.txtResult.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnClearOne
             // 
@@ -444,11 +431,22 @@
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.btnSum_Click);
             // 
+            // lblResult
+            // 
+            this.lblResult.Font = new System.Drawing.Font("Khmer OS Siemreap", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblResult.Location = new System.Drawing.Point(0, 82);
+            this.lblResult.Name = "lblResult";
+            this.lblResult.Size = new System.Drawing.Size(402, 90);
+            this.lblResult.TabIndex = 58;
+            this.lblResult.Text = "0";
+            this.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 36F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(402, 598);
+            this.Controls.Add(this.lblResult);
             this.Controls.Add(this.lbeMemory);
             this.Controls.Add(this.lblMemoryStore);
             this.Controls.Add(this.lblMemoryMinus);
@@ -480,7 +478,6 @@
             this.Controls.Add(this.button14);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnClearOne);
-            this.Controls.Add(this.txtResult);
             this.Font = new System.Drawing.Font("Khmer OS Siemreap", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.Name = "Form1";
@@ -506,7 +503,6 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.TextBox txtResult;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button btnEqual;
@@ -523,6 +519,7 @@
         private System.Windows.Forms.Label lblMemoryStore;
         private System.Windows.Forms.Label lbeMemory;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label lblResult;
     }
 }
 
