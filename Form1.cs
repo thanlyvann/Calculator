@@ -5,28 +5,25 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        double num1 = 0;
-        double num2 = 0;
+        double num1 = 0, num2 = 0;
+        bool equalClicked = false, operatorClicked = false, previousResult = false;
         string Operator = "";
-        bool equalClicked = false;
-        bool operatorClicked = false;
-        bool previousResult = false;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void btnNum1_Click(object sender, EventArgs e)
+        private void btnNumber_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
-            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") 
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined")
                 || lblResult.Text == "Undefined")
             {
                 lblResult.Text = "0";
+                equalClicked = false;
                 EnabledButton();
-                Reset();
             }
 
             if (lblResult.Text == "0")
@@ -40,17 +37,16 @@ namespace Calculator
                 {
                     num1 = 0;
                     num1 = Convert.ToDouble(lblResult.Text);
-
                     lblResult.Text = "";
                     previousResult = false;
-                    equalClicked = true;
                 }
                 else if (operatorClicked)
                 {
                     lblResult.Text = "";
-                    operatorClicked = false;
                 }
+
                 lblResult.Text += button.Text;
+                operatorClicked = false;
             }
         }
 
@@ -58,52 +54,50 @@ namespace Calculator
         {
             Button button = (Button)sender;
 
-            Operator = button.Text;
-
             if (operatorClicked)
-            {
                 Operator = button.Text;
-                return;
+
+            if (!equalClicked)
+            {
+                num1 = Convert.ToDouble(lblResult.Text);
+                equalClicked = true;
+            }
+            else
+            {
+                btnEqual_Click(sender, e);
+                previousResult = true;
             }
 
-            if(!operatorClicked && !equalClicked)
+            Operator = button.Text;
+            operatorClicked = true;
+            equalClicked = true;
+            num2 = 0;
+        }
+
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            if (!previousResult)
+            {
+                num2 = Convert.ToDouble(lblResult.Text);
+                previousResult = true;
+            }
+            else
             {
                 num1 = Convert.ToDouble(lblResult.Text);
                 operatorClicked = true;
-                previousResult = false;
-                equalClicked = true;
             }
-            else if(!previousResult && equalClicked)
-            {
-                operatorClicked = true;
-                btnEqual_Click(sender,e);
-            }
+
+            Calculator();
+            equalClicked = false;
         }
-        private void btnEqual_Click(object sender, EventArgs e)
-        {
-            switch (previousResult)
-            {
-                case false: 
-                    num2 = Convert.ToDouble(lblResult.Text);
-                    Calculator();
-                    previousResult = true;
-                    operatorClicked = false;
-                    equalClicked = false;
-                    break;
-                case true: 
-                    num1 = Convert.ToDouble(lblResult.Text);
-                    Calculator();
-                    operatorClicked = false;
-                    break;
-            }
-        }
+
         void EnabledButton()
         {
             Button[] btn =
                 { btnCalculate, button11, button12, button13, btnSquare,
                   btnSqrRoot, btnFraction, btnPercentage, btnChange, btnDot };
 
-            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined") 
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined")
                 || lblResult.Text == "Undefined")
             {
                 foreach (var button in btn)
@@ -116,18 +110,14 @@ namespace Calculator
                 foreach (var button in btn)
                 {
                     button.Enabled = true;
+                    num1 = 0;
+                    num2 = 0;
+                    Operator = "";
+                    equalClicked = false;
+                    operatorClicked = false;
+                    previousResult = false;
                 }
             }
-        }
-
-        void Reset()
-        {
-            num1 = 0;
-            num2 = 0;
-            Operator = "";
-            equalClicked = false;
-            operatorClicked = false;
-            previousResult = false;
         }
 
         void Calculator()
@@ -140,16 +130,16 @@ namespace Calculator
                 case "-":
                     lblResult.Text = Convert.ToString(num1 - num2);
                     break;
-                case "*":
+                case "x":
                     lblResult.Text = Convert.ToString(num1 * num2);
                     break;
-                case "/":
+                case "÷":
                     if (num2 == 0)
                     {
                         lblResult.Text = "Cannot Divide by Zero";
-                        if(num1 == 0 && num2 == 0)
+                        if (num1 == 0 && num2 == 0)
                             lblResult.Text = "Result is Undefined";
-                            EnabledButton();
+                        EnabledButton();
                         EnabledButton();
                     }
                     else
@@ -162,7 +152,7 @@ namespace Calculator
         {
             Button btn = (Button)sender;
 
-            if(operatorClicked)
+            if (operatorClicked)
             {
                 lblResult.Text = "0.";
                 operatorClicked = false;
@@ -175,7 +165,7 @@ namespace Calculator
         private void btnClear_Click(object sender, EventArgs e)
         {
             lblResult.Text = "0";
-            Reset();
+            EnabledButton();
         }
         private void btnCE_Click(object sender, EventArgs e)
         {
@@ -184,8 +174,12 @@ namespace Calculator
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (previousResult || operatorClicked)
-                return;
+            if (equalClicked)
+                ClearOne();
+            else if (operatorClicked)
+                lblResult.Text = lblResult.Text;
+            else if (num1 != 0 && num2 != 0 && previousResult)
+                lblResult.Text = lblResult.Text;
             else
                 ClearOne();
         }
@@ -198,7 +192,7 @@ namespace Calculator
         }
         private void btnFraction_Click(object sender, EventArgs e)
         {
-            if(lblResult.Text == "0")
+            if (lblResult.Text == "0")
             {
                 lblResult.Text = "Cannot Divide by Zero";
                 EnabledButton();
@@ -208,7 +202,7 @@ namespace Calculator
         }
         private void btnSquare_Click(object sender, EventArgs e)
         {
-             lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
+            lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
         }
         private void btnSqrRoot_Click(object sender, EventArgs e)
         {
@@ -224,7 +218,7 @@ namespace Calculator
         }
         private void btnPercentage_Click(object sender, EventArgs e)
         {
-            if(equalClicked)
+            if (equalClicked)
             {
                 num2 = Convert.ToDouble(lblResult.Text);
                 lblResult.Text = Convert.ToString((num1 * num2) / 100);
@@ -234,7 +228,7 @@ namespace Calculator
                 lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
             }
         }
-        private void button21_Click(object sender, EventArgs e)
+        private void btnChangeOperator_Click(object sender, EventArgs e)
         {
             lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * (-1));
         }

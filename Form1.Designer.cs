@@ -66,11 +66,12 @@
             // 
             this.btnClearOne.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             this.btnClearOne.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearOne.Font = new System.Drawing.Font("Khmer OS Siemreap", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClearOne.Location = new System.Drawing.Point(301, 222);
             this.btnClearOne.Name = "btnClearOne";
             this.btnClearOne.Size = new System.Drawing.Size(91, 56);
             this.btnClearOne.TabIndex = 21;
-            this.btnClearOne.Text = "Delete";
+            this.btnClearOne.Text = "⌫";
             this.btnClearOne.UseVisualStyleBackColor = true;
             this.btnClearOne.Click += new System.EventHandler(this.btnClearOne_Click);
             // 
@@ -96,7 +97,7 @@
             this.btnNum1.TabIndex = 40;
             this.btnNum1.Text = "1";
             this.btnNum1.UseVisualStyleBackColor = true;
-            this.btnNum1.Click += new System.EventHandler(this.btnNum1_Click);
+            this.btnNum1.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // btnCalculate
             // 
@@ -120,7 +121,7 @@
             this.btnChange.TabIndex = 44;
             this.btnChange.Text = "+/-";
             this.btnChange.UseVisualStyleBackColor = true;
-            this.btnChange.Click += new System.EventHandler(this.button21_Click);
+            this.btnChange.Click += new System.EventHandler(this.btnChangeOperator_Click);
             // 
             // button1
             // 
@@ -132,7 +133,7 @@
             this.button1.TabIndex = 40;
             this.button1.Text = "2";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button1.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button2
             // 
@@ -144,7 +145,7 @@
             this.button2.TabIndex = 40;
             this.button2.Text = "3";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button2.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button3
             // 
@@ -156,7 +157,7 @@
             this.button3.TabIndex = 40;
             this.button3.Text = "6";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button3.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button4
             // 
@@ -168,7 +169,7 @@
             this.button4.TabIndex = 40;
             this.button4.Text = "9";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button4.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button5
             // 
@@ -180,7 +181,7 @@
             this.button5.TabIndex = 40;
             this.button5.Text = "0";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button5.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button6
             // 
@@ -192,7 +193,7 @@
             this.button6.TabIndex = 40;
             this.button6.Text = "5";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button6.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button7
             // 
@@ -204,7 +205,7 @@
             this.button7.TabIndex = 40;
             this.button7.Text = "6";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button7.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button8
             // 
@@ -216,7 +217,7 @@
             this.button8.TabIndex = 40;
             this.button8.Text = "8";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button8.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button9
             // 
@@ -228,7 +229,7 @@
             this.button9.TabIndex = 40;
             this.button9.Text = "7";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button9.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button10
             // 
@@ -240,7 +241,7 @@
             this.button10.TabIndex = 40;
             this.button10.Text = "4";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.btnNum1_Click);
+            this.button10.Click += new System.EventHandler(this.btnNumber_Click);
             // 
             // button12
             // 
@@ -250,7 +251,7 @@
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(91, 56);
             this.button12.TabIndex = 37;
-            this.button12.Text = "*";
+            this.button12.Text = "x";
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
@@ -258,11 +259,12 @@
             // 
             this.button13.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Font = new System.Drawing.Font("Khmer OS Siemreap", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button13.Location = new System.Drawing.Point(303, 284);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(91, 56);
             this.button13.TabIndex = 37;
-            this.button13.Text = "/";
+            this.button13.Text = "÷";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
@@ -336,7 +338,7 @@
             this.btnSqrRoot.Name = "btnSqrRoot";
             this.btnSqrRoot.Size = new System.Drawing.Size(91, 56);
             this.btnSqrRoot.TabIndex = 50;
-            this.btnSqrRoot.Text = "√";
+            this.btnSqrRoot.Text = "²√x";
             this.btnSqrRoot.UseVisualStyleBackColor = true;
             this.btnSqrRoot.Click += new System.EventHandler(this.btnSqrRoot_Click);
             // 
@@ -423,6 +425,7 @@
             // 
             this.button11.FlatAppearance.BorderColor = System.Drawing.Color.LightGray;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Font = new System.Drawing.Font("Khmer OS Siemreap", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button11.Location = new System.Drawing.Point(303, 408);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(91, 56);
