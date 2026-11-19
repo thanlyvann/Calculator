@@ -7,10 +7,8 @@ namespace Calculator
     {
         double num1 = 0;
         double num2 = 0;
-
         string Operator = "";
-
-        bool equalClick = false;
+        bool equalClicked = false;
         bool operatorClicked = false;
         bool previousResult = false;
 
@@ -27,22 +25,14 @@ namespace Calculator
                 || lblResult.Text == "Undefined")
             {
                 lblResult.Text = "0";
-                equalClick = false;
                 EnabledButton();
+                Reset();
             }
 
             if (lblResult.Text == "0")
             {
-                if(!operatorClicked)
-                {
-                    lblResult.Text = "";
-                    lblResult.Text += button.Text;
-                }
-                else
-                {
-                    lblResult.Text = "";
-                    lblResult.Text += button.Text;
-                }
+                lblResult.Text = "";
+                lblResult.Text += button.Text;
             }
             else if (lblResult.Text != "0" && (num1 != 0 || num2 == 0))
             {
@@ -50,16 +40,17 @@ namespace Calculator
                 {
                     num1 = 0;
                     num1 = Convert.ToDouble(lblResult.Text);
+
                     lblResult.Text = "";
                     previousResult = false;
+                    equalClicked = true;
                 }
-                else if(operatorClicked)
+                else if (operatorClicked)
                 {
-                     lblResult.Text = "";
+                    lblResult.Text = "";
+                    operatorClicked = false;
                 }
-
                 lblResult.Text += button.Text;
-                operatorClicked = false;
             }
         }
 
@@ -67,43 +58,45 @@ namespace Calculator
         {
             Button button = (Button)sender;
 
-            if (operatorClicked)
-                Operator = button.Text;
-
-            if (!equalClick)
-            {
-                num1 = Convert.ToDouble(lblResult.Text);
-                equalClick = true;
-            }
-            else
-            {
-                btnEqual_Click(sender, e);
-                previousResult = true;
-            }
-
             Operator = button.Text;
-            operatorClicked = true;
-            equalClick = true;
-            num2 = 0;
-        }
 
-        private void btnEqual_Click(object sender, EventArgs e)
-        {
-            if (!previousResult)
+            if (operatorClicked)
             {
-                num2 = Convert.ToDouble(lblResult.Text);
-                previousResult = true;
+                Operator = button.Text;
+                return;
             }
-            else
+
+            if(!operatorClicked && !equalClicked)
             {
                 num1 = Convert.ToDouble(lblResult.Text);
                 operatorClicked = true;
+                previousResult = false;
+                equalClicked = true;
             }
-
-            calculator();
-            equalClick = false;
+            else if(!previousResult && equalClicked)
+            {
+                operatorClicked = true;
+                btnEqual_Click(sender,e);
+            }
         }
-
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            switch (previousResult)
+            {
+                case false: 
+                    num2 = Convert.ToDouble(lblResult.Text);
+                    Calculator();
+                    previousResult = true;
+                    operatorClicked = false;
+                    equalClicked = false;
+                    break;
+                case true: 
+                    num1 = Convert.ToDouble(lblResult.Text);
+                    Calculator();
+                    operatorClicked = false;
+                    break;
+            }
+        }
         void EnabledButton()
         {
             Button[] btn =
@@ -123,17 +116,21 @@ namespace Calculator
                 foreach (var button in btn)
                 {
                     button.Enabled = true;
-                    num1 = 0;
-                    num2 = 0;
-                    Operator = "";
-                    equalClick = false;
-                    operatorClicked = false;
-                    previousResult = false;
                 }
             }
         }
 
-        void calculator()
+        void Reset()
+        {
+            num1 = 0;
+            num2 = 0;
+            Operator = "";
+            equalClicked = false;
+            operatorClicked = false;
+            previousResult = false;
+        }
+
+        void Calculator()
         {
             switch (Operator)
             {
@@ -178,7 +175,7 @@ namespace Calculator
         private void btnClear_Click(object sender, EventArgs e)
         {
             lblResult.Text = "0";
-            EnabledButton();
+            Reset();
         }
         private void btnCE_Click(object sender, EventArgs e)
         {
@@ -187,12 +184,8 @@ namespace Calculator
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (equalClick)
-                ClearOne();
-            else if (operatorClicked)
-                lblResult.Text = lblResult.Text;
-            else if (num1 != 0 && num2 != 0 && previousResult)
-                lblResult.Text = lblResult.Text;
+            if (previousResult || operatorClicked)
+                return;
             else
                 ClearOne();
         }
@@ -231,7 +224,7 @@ namespace Calculator
         }
         private void btnPercentage_Click(object sender, EventArgs e)
         {
-            if(equalClick)
+            if(equalClicked)
             {
                 num2 = Convert.ToDouble(lblResult.Text);
                 lblResult.Text = Convert.ToString((num1 * num2) / 100);
