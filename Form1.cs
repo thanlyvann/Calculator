@@ -6,8 +6,8 @@ namespace Calculator
     public partial class Form1 : Form
     {
         double num1 = 0, num2 = 0;
-        bool equalClicked = false, operatorClicked = false, previousResult = false;
-        string Operator = "";
+        bool equalClicked = false, operatorClicked = false, previousResult = false, functionClicked = false;
+        string operatorInput = "";
 
         public Form1()
         {
@@ -24,6 +24,7 @@ namespace Calculator
                 lblResult.Text = "0";
                 equalClicked = false;
                 EnabledButton();
+                Reset();
             }
 
             if (lblResult.Text == "0")
@@ -31,7 +32,7 @@ namespace Calculator
                 lblResult.Text = "";
                 lblResult.Text += button.Text;
             }
-            else if (lblResult.Text != "0" && (num1 != 0 || num2 == 0))
+            else if (lblResult.Text != "0" && ((num1 != 0 || num2 == 0) || num1 == 0 ))
             {
                 if (previousResult)
                 {
@@ -40,22 +41,28 @@ namespace Calculator
                     lblResult.Text = "";
                     previousResult = false;
                 }
-                else if (operatorClicked)
+                else if (operatorClicked || functionClicked)
                 {
                     lblResult.Text = "";
                 }
 
                 lblResult.Text += button.Text;
                 operatorClicked = false;
+                functionClicked = false;
             }
         }
 
-        private void btnCalculate_Click(object sender, EventArgs e)
+        private void btnOperator_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
 
+            operatorInput = button.Text;
+
             if (operatorClicked)
-                Operator = button.Text;
+            {
+                operatorInput = button.Text;
+                return;
+            }
 
             if (!equalClicked)
             {
@@ -64,11 +71,11 @@ namespace Calculator
             }
             else
             {
-                btnEqual_Click(sender, e);
+                num2= Convert.ToDouble(lblResult.Text);
+                Calculator();
                 previousResult = true;
             }
 
-            Operator = button.Text;
             operatorClicked = true;
             equalClicked = true;
             num2 = 0;
@@ -110,19 +117,23 @@ namespace Calculator
                 foreach (var button in btn)
                 {
                     button.Enabled = true;
-                    num1 = 0;
-                    num2 = 0;
-                    Operator = "";
-                    equalClicked = false;
-                    operatorClicked = false;
-                    previousResult = false;
                 }
             }
         }
 
+        void Reset()
+        {
+            num1 = 0;
+            num2 = 0;
+            operatorInput = "";
+            equalClicked = false;
+            operatorClicked = false;
+            previousResult = false;
+        }
+
         void Calculator()
         {
-            switch (Operator)
+            switch (operatorInput)
             {
                 case "+":
                     lblResult.Text = Convert.ToString(num1 + num2);
@@ -139,7 +150,7 @@ namespace Calculator
                         lblResult.Text = "Cannot Divide by Zero";
                         if (num1 == 0 && num2 == 0)
                             lblResult.Text = "Result is Undefined";
-                        EnabledButton();
+                            EnabledButton();
                         EnabledButton();
                     }
                     else
@@ -166,6 +177,7 @@ namespace Calculator
         {
             lblResult.Text = "0";
             EnabledButton();
+            Reset();
         }
         private void btnCE_Click(object sender, EventArgs e)
         {
@@ -174,9 +186,7 @@ namespace Calculator
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (equalClicked)
-                ClearOne();
-            else if (operatorClicked)
+            if (operatorClicked)
                 lblResult.Text = lblResult.Text;
             else if (num1 != 0 && num2 != 0 && previousResult)
                 lblResult.Text = lblResult.Text;
@@ -199,10 +209,14 @@ namespace Calculator
             }
             else
                 lblResult.Text = Convert.ToString(1 / (Convert.ToDouble(lblResult.Text)));
+
+            functionClicked = true;
         }
         private void btnSquare_Click(object sender, EventArgs e)
         {
             lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
+
+            functionClicked = true;
         }
         private void btnSqrRoot_Click(object sender, EventArgs e)
         {
@@ -215,6 +229,8 @@ namespace Calculator
             }
             else
                 lblResult.Text = Math.Sqrt(Convert.ToDouble(lblResult.Text)).ToString();
+
+            functionClicked = true;
         }
         private void btnPercentage_Click(object sender, EventArgs e)
         {
@@ -227,6 +243,8 @@ namespace Calculator
             {
                 lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
             }
+
+            functionClicked = true;
         }
         private void btnChangeOperator_Click(object sender, EventArgs e)
         {

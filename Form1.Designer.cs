@@ -109,7 +109,7 @@
             this.btnCalculate.TabIndex = 37;
             this.btnCalculate.Text = "+";
             this.btnCalculate.UseVisualStyleBackColor = true;
-            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
+            this.btnCalculate.Click += new System.EventHandler(this.btnOperator_Click);
             // 
             // btnChange
             // 
@@ -253,7 +253,7 @@
             this.button12.TabIndex = 37;
             this.button12.Text = "x";
             this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btnCalculate_Click);
+            this.button12.Click += new System.EventHandler(this.btnOperator_Click);
             // 
             // button13
             // 
@@ -266,7 +266,7 @@
             this.button13.TabIndex = 37;
             this.button13.Text = "÷";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.btnCalculate_Click);
+            this.button13.Click += new System.EventHandler(this.btnOperator_Click);
             // 
             // btnEqual
             // 
@@ -432,7 +432,7 @@
             this.button11.TabIndex = 37;
             this.button11.Text = "-";
             this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.btnCalculate_Click);
+            this.button11.Click += new System.EventHandler(this.btnOperator_Click);
             // 
             // lblResult
             // 
