@@ -29,10 +29,20 @@ namespace Calculator
 
             if (lblResult.Text == "0")
             {
-                lblResult.Text = "";
-                lblResult.Text += button.Text;
+                if (num1 == 0 && num2 == 0)
+                {
+                    lblResult.Text = "";
+                    lblResult.Text += button.Text;
+                    operatorClicked = false;
+                    functionClicked = false;
+                }
+                else
+                {
+                    lblResult.Text = "";
+                    lblResult.Text += button.Text;
+                }
             }
-            else if (lblResult.Text != "0" && ((num1 != 0 || num2 == 0) || num1 == 0 ))
+            else if (lblResult.Text != "0" && ((num1 != 0 || num2 == 0) || num1 == 0))
             {
                 if (previousResult)
                 {
@@ -43,7 +53,7 @@ namespace Calculator
                 }
                 else if (operatorClicked || functionClicked)
                 {
-                    lblResult.Text = "";
+                     lblResult.Text = "";
                 }
 
                 lblResult.Text += button.Text;
@@ -55,8 +65,6 @@ namespace Calculator
         private void btnOperator_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-
-            operatorInput = button.Text;
 
             if (operatorClicked)
             {
@@ -71,11 +79,12 @@ namespace Calculator
             }
             else
             {
-                num2= Convert.ToDouble(lblResult.Text);
+                num2 = Convert.ToDouble(lblResult.Text);
                 Calculator();
                 previousResult = true;
             }
 
+            operatorInput = button.Text;
             operatorClicked = true;
             equalClicked = true;
             num2 = 0;
@@ -163,7 +172,7 @@ namespace Calculator
         {
             Button btn = (Button)sender;
 
-            if (operatorClicked)
+            if(operatorClicked)
             {
                 lblResult.Text = "0.";
                 operatorClicked = false;
@@ -237,12 +246,14 @@ namespace Calculator
             if (equalClicked)
             {
                 num2 = Convert.ToDouble(lblResult.Text);
-                lblResult.Text = Convert.ToString((num1 * num2) / 100);
+
+                if (operatorInput == "x" || operatorInput == "÷")
+                    lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
+                else
+                    lblResult.Text = Convert.ToString((num1 * num2) / 100);
             }
             else
-            {
                 lblResult.Text = Convert.ToString((Convert.ToDouble(lblResult.Text)) / 100);
-            }
 
             functionClicked = true;
         }
