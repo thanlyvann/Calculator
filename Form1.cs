@@ -46,14 +46,26 @@ namespace Calculator
             {
                 if (previousResult)
                 {
-                    num1 = 0;
-                    num1 = Convert.ToDouble(lblResult.Text);
-                    lblResult.Text = "";
-                    previousResult = false;
+                    if(lblResult.Text.Contains(".") || functionClicked)
+                    {
+                        previousResult = false;
+                    }
+                    else
+                    {
+                        num1 = 0;
+                        num1 = Convert.ToDouble(lblResult.Text);
+                        lblResult.Text = "";
+                        previousResult = false;
+                    }
                 }
                 else if (operatorClicked || functionClicked)
                 {
-                     lblResult.Text = "";
+                    if (operatorClicked && functionClicked)
+                    {
+
+                    }
+                    else
+                      lblResult.Text = "";
                 }
 
                 lblResult.Text += button.Text;
@@ -87,6 +99,9 @@ namespace Calculator
             operatorInput = button.Text;
             operatorClicked = true;
             equalClicked = true;
+
+            lblMemoryBar.Text = Convert.ToString(num1) + " " + operatorInput;
+
             num2 = 0;
         }
 
@@ -105,6 +120,8 @@ namespace Calculator
 
             Calculator();
             equalClicked = false;
+
+            lblMemoryBar.Text = Convert.ToString(num1) + " " + operatorInput + " " + Convert.ToString(num2) + " " +"=";
         }
 
         void EnabledButton()
@@ -138,6 +155,7 @@ namespace Calculator
             equalClicked = false;
             operatorClicked = false;
             previousResult = false;
+            functionClicked = false;
         }
 
         void Calculator()
@@ -170,12 +188,15 @@ namespace Calculator
 
         private void btnDot_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-
-            if(operatorClicked)
+            if(operatorClicked || !equalClicked)
             {
                 lblResult.Text = "0.";
                 operatorClicked = false;
+            }
+            else if(functionClicked)
+            {
+                lblResult.Text = "0.";
+                functionClicked = false;
             }
 
             if (!lblResult.Text.Contains("."))
@@ -191,14 +212,27 @@ namespace Calculator
         private void btnCE_Click(object sender, EventArgs e)
         {
             lblResult.Text = "0";
+            EnabledButton();
+            equalClicked = false;
+            operatorClicked = false;
+            previousResult = false; 
+            functionClicked = false;
         }
 
         private void btnClearOne_Click(object sender, EventArgs e)
         {
-            if (operatorClicked)
-                lblResult.Text = lblResult.Text;
+            if ((lblResult.Text == "Cannot Divide by Zero" || lblResult.Text == "Result is Undefined")
+                || lblResult.Text == "Undefined")
+            {
+                lblResult.Text = "0";
+                equalClicked = false;
+                EnabledButton();
+                Reset();
+            }
+            else if (operatorClicked)
+                return;
             else if (num1 != 0 && num2 != 0 && previousResult)
-                lblResult.Text = lblResult.Text;
+                return;
             else
                 ClearOne();
         }
@@ -221,6 +255,7 @@ namespace Calculator
 
             functionClicked = true;
         }
+
         private void btnSquare_Click(object sender, EventArgs e)
         {
             lblResult.Text = Convert.ToString(Convert.ToDouble(lblResult.Text) * Convert.ToDouble(lblResult.Text));
